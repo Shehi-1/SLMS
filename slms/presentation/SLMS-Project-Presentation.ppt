@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>SLMS Project Presentation</title>
+<style>
+@page { size: landscape; margin: 0; }
+html, body { margin: 0; padding: 0; background: #123d4b; }
+.slide { width: 1600px; height: 900px; page-break-after: always; break-after: page; overflow: hidden; }
+.slide:last-child { page-break-after: auto; }
+.slide img { display: block; width: 1600px; height: 900px; border: 0; }
+</style>
+</head>
+<body>
+<div class="slide"><img src="rendered-01.png" alt="SLMS project presentation slide 1" /></div>
+<div class="slide"><img src="rendered-02.png" alt="SLMS project presentation slide 2" /></div>
+<div class="slide"><img src="rendered-03.png" alt="SLMS project presentation slide 3" /></div>
+<div class="slide"><img src="rendered-04.png" alt="SLMS project presentation slide 4" /></div>
+<div class="slide"><img src="rendered-05.png" alt="SLMS project presentation slide 5" /></div>
+<div class="slide"><img src="rendered-06.png" alt="SLMS project presentation slide 6" /></div>
+<div class="slide"><img src="rendered-07.png" alt="SLMS project presentation slide 7" /></div>
+<div class="slide"><img src="rendered-08.png" alt="SLMS project presentation slide 8" /></div>
+<div class="slide"><img src="rendered-09.png" alt="SLMS project presentation slide 9" /></div>
+<div class="slide"><img src="rendered-10.png" alt="SLMS project presentation slide 10" /></div>
+<div class="slide"><img src="rendered-11.png" alt="SLMS project presentation slide 11" /></div>
+</body>
+</html>

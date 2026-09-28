@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weekly Report Detail</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard-shell">
+    <aside class="sidebar"><a class="brand" href="/admin/dashboard"><span class="brand-mark">SL</span><span>Student Logbook</span></a><div class="workspace-label">ADMINISTRATOR</div><nav class="nav-list" aria-label="Main navigation"><a class="nav-link" href="/admin/dashboard"><span class="nav-icon">⌂</span>Overview</a><a class="nav-link" href="/admin/attendance"><span class="nav-icon">◷</span>Attendance</a><a class="nav-link active" href="/admin/reports"><span class="nav-icon">▤</span>Weekly reports</a><a class="nav-link" href="/admin/dashboard?view=details"><span class="nav-icon">○</span>Your details</a></nav><div class="sidebar-footer"><div class="secure-note"><span class="status-dot"></span><span><strong>Workspace secure</strong><small>Session protected</small></span></div><form action="/logout" method="post"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="logout-button" type="submit">Sign out <span>↗</span></button></form></div></aside>
+    <main class="dashboard-main">
+      <header class="topbar"><div><p class="eyebrow">REPORT REVIEW</p><h1>Weekly report</h1></div><a class="secondary-link detail-back" href="/admin/reports">← Back to reports</a></header>
+      <article class="panel report-detail-panel"><div class="report-detail-heading"><div><p class="eyebrow">WEEK OF <%= new Date(report.weekStarting).toLocaleDateString() %></p><h2><%= report.title %></h2><p class="detail-student"><%= report.student ? report.student.fullname : 'Unknown student' %><% if (report.student && report.student.regNo) { %> · <%= report.student.regNo %><% } %></p></div><span class="record-status <%= report.status === 'reviewed' ? 'complete' : 'open' %>"><%= report.status %></span></div><div class="report-detail-body"><h3>Weekly summary</h3><p><%= report.summary %></p></div><% if (report.attachment) { %><div class="attachment-box"><span>Attached document</span><strong><%= report.attachment.originalName %></strong></div><% } %><% if (report.status !== 'reviewed') { %><form class="review-form" action="/admin/reports/<%= report._id %>/review" method="post"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="primary-button" type="submit">Mark as reviewed <span>✓</span></button></form><% } %></article>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weekly Reports | Student Logbook</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/student/dashboard"><span class="brand-mark">SL</span><span>Student Logbook</span></a>
+      <div class="workspace-label">STUDENT WORKSPACE</div>
+      
+      <!-- User Account Card -->
+      <div class="sidebar-user-card">
+        <div class="user-avatar"><%= user.fullname.charAt(0).toUpperCase() %></div>
+        <div class="user-info">
+          <div class="user-name"><%= user.fullname %></div>
+          <div class="user-role">📚 Student</div>
+          <div class="user-email"><%= user.email %></div>
+        </div>
+      </div>
+      
+      <nav class="nav-list" aria-label="Main navigation">
+        <a class="nav-link" href="/student/dashboard"><span class="nav-icon">⌂</span>Overview</a>
+        <a class="nav-link" href="/student/attendance"><span class="nav-icon">◷</span>Attendance</a>
+        <a class="nav-link active" href="/student/reports"><span class="nav-icon">▤</span>Weekly reports</a>
+        <a class="nav-link" href="/student/dashboard?view=details"><span class="nav-icon">○</span>Your details</a>
+      </nav>
+      <div class="sidebar-footer"><div class="secure-note"><span class="status-dot"></span><span><strong>Workspace secure</strong><small>Session protected</small></span></div><form action="/logout" method="post"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="logout-button" type="submit">Sign out <span>↗</span></button></form></div>
+    </aside>
+    <main class="dashboard-main">
+      <header class="topbar"><div><p class="eyebrow">LOGBOOK</p><h1>Weekly reports</h1></div><div class="date-stamp"><span class="pulse"></span>Save your placement story</div></header>
+      <% if (error) { %><div class="form-error" role="alert"><span>!</span><%= error %></div><% } %>
+      <div class="report-layout"><section class="panel report-form-panel"><div class="panel-heading"><div><p class="eyebrow">NEW OR UPDATE</p><h2>Weekly report</h2></div><span class="panel-badge">One report per week</span></div><form class="report-form" action="/student/reports" method="post" enctype="multipart/form-data"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><label for="weekStarting">Week starting</label><input id="weekStarting" name="weekStarting" type="date" value="<%= values.weekStarting || '' %>" required><label for="title">Report title</label><input id="title" name="title" maxlength="120" value="<%= values.title || '' %>" placeholder="e.g. Frontend orientation" required><label for="summary">What did you work on?</label><textarea id="summary" name="summary" maxlength="5000" rows="7" placeholder="Describe your tasks, learning, and progress this week." required><%= values.summary || '' %></textarea><label for="attachment">Supporting document <span class="field-note">optional, max 5 MB</span></label><input id="attachment" name="attachment" type="file" accept=".pdf,.doc,.docx,.txt"><button class="primary-button" type="submit">Submit weekly report <span>→</span></button></form></section><section class="panel submitted-panel"><div class="panel-heading"><div><p class="eyebrow">SUBMITTED</p><h2>Your reports</h2></div><span class="panel-badge"><%= reports.length %> total</span></div><div class="record-list"><% if (!reports.length) { %><div class="empty-state"><div class="empty-icon">▤</div><h3>No reports submitted</h3><p>Your weekly logbook history will appear here.</p></div><% } else { %><% reports.forEach(report => { %><article class="report-item"><div class="report-item-top"><strong><%= report.title %></strong><span class="record-status complete"><%= report.status %></span></div><small>Week of <%= new Date(report.weekStarting).toLocaleDateString() %></small><p><%= report.summary %></p><% if (report.attachment) { %><span class="attachment-name">Attached: <%= report.attachment.originalName %></span><% } %></article><% }) %><% } %></div></section></div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create Student Account</title>
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+  <main class="auth-page login-page register-page">
+    <section class="brand-panel compact-brand">
+      <a class="back-link" href="/admin/dashboard">← Back to dashboard</a>
+      <div class="brand-mark">SL</div>
+      <p class="eyebrow">ADMINISTRATOR CONSOLE</p>
+      <h1>Give every placement a clear start.</h1>
+      <p class="brand-copy">Create a student workspace with the identity details they will use throughout their placement.</p>
+      <div class="login-role-tag student"><span></span>Student account creation</div>
+    </section>
+    <section class="access-panel">
+      <div class="access-content login-content">
+        <p class="eyebrow">STUDENT MANAGEMENT</p>
+        <h2>Create student account</h2>
+        <p class="muted">Set up the student’s logbook access and placement identity.</p>
+        <% if (error) { %><div class="form-error" role="alert"><span>!</span><%= error %></div><% } %>
+        <% if (request.query.created) { %><div class="form-success" role="status">Student account created successfully.</div><% } %>
+        <form class="login-form register-form" action="/admin/users/new" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <label for="fullname">Full name</label>
+          <div class="input-wrap"><span class="input-icon">✦</span><input id="fullname" name="fullname" value="<%= values.fullname || '' %>" autocomplete="name" placeholder="Student’s full name" required></div>
+          <label for="username">Username</label>
+          <div class="input-wrap"><span class="input-icon">@</span><input id="username" name="username" value="<%= values.username || '' %>" autocomplete="username" placeholder="Choose a username" required></div>
+          <label for="email">Email address</label>
+          <div class="input-wrap"><span class="input-icon">✉</span><input id="email" name="email" type="email" value="<%= values.email || '' %>" autocomplete="email" placeholder="student@example.com" required></div>
+          <label for="regNo">Registration number</label>
+          <div class="input-wrap"><span class="input-icon">#</span><input id="regNo" name="regNo" value="<%= values.regNo || '' %>" autocomplete="off" placeholder="e.g. SIWES/2026/001" required></div>
+          <label for="level">Level</label>
+          <div class="input-wrap"><span class="input-icon">L</span><select id="level" name="level" required><option value="">Select student level</option><% ['100 Level', '200 Level', '300 Level', '400 Level', '500 Level'].forEach(level => { %><option value="<%= level %>" <%= values.level === level ? 'selected' : '' %>><%= level %></option><% }) %></select></div>
+          <label for="password">Initial password</label>
+          <div class="input-wrap"><span class="input-icon">*</span><input id="password" name="password" type="password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters" required></div>
+          <button class="submit-button" type="submit">Create student account <span>→</span></button>
+        </form>
+        <p class="access-footer"><a class="text-link" href="/admin/dashboard">Cancel and return to dashboard</a></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

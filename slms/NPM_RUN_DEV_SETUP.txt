@@ -1,0 +1,29 @@
+#!/bin/bash
+# NPM RUN DEV - QUICK START GUIDE
+
+# Windows PowerShell Users - Choose ONE method below:
+
+# METHOD 1: Use the batch file (easiest)
+# .\run-dev.bat
+
+# METHOD 2: Use PowerShell with execution policy bypass
+# powershell -ExecutionPolicy Bypass -Command "npm run dev"
+
+# METHOD 3: Use Command Prompt (cmd.exe)
+# cmd /c npm run dev
+
+# METHOD 4: Direct node command with watch
+# node --watch server.js
+
+# METHOD 5: Enable execution policy permanently (one-time setup)
+# powershell -ExecutionPolicy Bypass -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force"
+# Then close and reopen PowerShell
+# Then: npm run dev
+
+echo "Choose one of the methods above to run the development server!"
+echo ""
+echo "RECOMMENDED: Use .\run-dev.bat"
+echo ""
+echo "Or open Command Prompt (cmd) and run:"
+echo "  cd c:\Users\abdur\Desktop\slms\slms"
+echo "  npm run dev"

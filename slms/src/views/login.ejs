@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+  <main class="auth-page login-page">
+    <section class="brand-panel compact-brand">
+      <span class="login-portal-label"><%= area === 'admin' ? 'Administrator portal' : 'Student portal' %></span>
+      <div class="brand-mark">SL</div>
+      <p class="eyebrow">STUDENT LOGBOOK</p>
+      <h1>Welcome back.</h1>
+      <p class="brand-copy">Sign in to continue managing your placement records.</p>
+      <div class="login-role-tag <%= area %>"><span></span><%= area === 'admin' ? 'Administrator access' : 'Student access' %></div>
+    </section>
+    <section class="access-panel">
+      <div class="access-content login-content">
+        <p class="eyebrow"><%= area === 'admin' ? 'ADMINISTRATOR PORTAL' : 'STUDENT PORTAL' %></p>
+        <h2><%= title %></h2>
+        <p class="muted">Enter your details to access your workspace.</p>
+        <% if (error) { %><div class="form-error" role="alert"><span>!</span><%= error %></div><% } %>
+        <form class="login-form" action="<%= typeof loginAction !== 'undefined' && loginAction ? loginAction : (area === 'admin' ? '/administrator-login' : '/student-login') %>" method="post" autocomplete="off">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <label for="<%= area %>-login-username"><%= area === 'student' ? 'Username or registration number' : 'Username' %></label>
+          <div class="input-wrap"><span class="input-icon">@</span><input id="<%= area %>-login-username" name="<%= area %>_login_username" value="<%= values.username || '' %>" autocomplete="off" placeholder="<%= area === 'student' ? 'Enter username or registration number' : 'Enter your username' %>" required></div>
+          <div class="password-heading"><label for="<%= area %>-login-password">Password</label><a href="#">Forgot password?</a></div>
+          <div class="input-wrap"><span class="input-icon">*</span><input id="<%= area %>-login-password" name="<%= area %>_login_password" type="password" autocomplete="new-password" placeholder="Enter your password" required></div>
+          <button class="submit-button" type="submit">Sign in <span>→</span></button>
+        </form>
+        <p class="access-footer">Need an account? <a class="text-link" href="/<%= area %>/register"><%= registration %></a></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

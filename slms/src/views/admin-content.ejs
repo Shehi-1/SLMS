@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= contentType === 'attendance' ? 'Attendance Review' : 'Weekly Reports Review' %></title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard-shell">
+    <aside class="sidebar"><a class="brand" href="/admin/dashboard"><span class="brand-mark">SL</span><span>Student Logbook</span></a><div class="workspace-label">ADMINISTRATOR</div><nav class="nav-list" aria-label="Main navigation"><a class="nav-link" href="/admin/dashboard"><span class="nav-icon">⌂</span>Overview</a><a class="nav-link active" href="/admin/<%= contentType %>"><span class="nav-icon"><%= contentType === 'attendance' ? '◷' : '▤' %></span><%= contentType === 'attendance' ? 'Attendance' : 'Weekly reports' %></a><a class="nav-link" href="/admin/dashboard?view=details"><span class="nav-icon">○</span>Your details</a></nav><div class="sidebar-footer"><div class="secure-note"><span class="status-dot"></span><span><strong>Workspace secure</strong><small>Session protected</small></span></div><form action="/logout" method="post"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="logout-button" type="submit">Sign out <span>↗</span></button></form></div></aside>
+    <main class="dashboard-main">
+      <header class="topbar"><div><p class="eyebrow">ADMIN REVIEW</p><h1><%= contentType === 'attendance' ? 'Attendance' : 'Weekly reports' %></h1></div><div class="date-stamp"><span class="pulse"></span>Live workspace</div></header>
+      <section class="panel table-panel"><div class="panel-heading"><div><p class="eyebrow"><%= contentType === 'attendance' ? 'PLACEMENT DAYS' : 'LOGBOOK SUBMISSIONS' %></p><h2><%= contentType === 'attendance' ? 'Student attendance records' : 'Student weekly reports' %></h2></div><span class="panel-badge"><%= records.length %> records</span></div><div class="record-list"><% if (!records.length) { %><div class="empty-state"><div class="empty-icon"><%= contentType === 'attendance' ? '◷' : '▤' %></div><h3>No records yet</h3><p>Student activity will appear here when it is submitted.</p></div><% } else { %><% records.forEach(record => { %><% if (contentType === 'reports') { %><a class="report-list-row" href="/admin/reports/<%= record._id %>"><span class="report-list-main"><strong><%= record.title %></strong><small><%= record.student ? record.student.fullname : 'Unknown student' %> · Week of <%= new Date(record.weekStarting).toLocaleDateString() %></small></span><span class="report-list-arrow"><span class="record-status <%= record.status === 'reviewed' ? 'complete' : 'open' %>"><%= record.status %></span><b>→</b></span></a><% } else { %><article class="admin-record"><div class="record-row"><div><strong><%= record.student ? record.student.fullname : 'Unknown student' %></strong><small><%= new Date(record.clockIn).toLocaleDateString() %></small></div><span class="record-status <%= record.clockOut ? 'complete' : 'open' %>"><%= record.clockOut ? `${record.durationMinutes || 0} min` : 'Active' %></span></div><p class="record-meta">Clock in: <%= new Date(record.clockIn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %> · Clock out: <%= record.clockOut ? new Date(record.clockOut).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Not yet' %></p></article><% } %><% }) %><% } %></div></section>
+    </main>
+  </div>
+</body>
+</html>
